@@ -7,11 +7,13 @@ card(R,S,Ranks,Suits) :-
 card([R,S]) :-
     card(R, S).
 
+cards([X]) :-
+    card(X),
+    !.
 cards([ X | Y ]) :-
     card(X),
     cards(Y), 
     !.
-cards([]).
 
 is_valid_hand(X) :-
     cards(X),
@@ -131,12 +133,24 @@ is_3_of_kind(X) :-
 
 %%
 
-is_full_house([[R1, _], [R1, _], [R1, _], [R2, _], [R2, _]]).
-is_full_house([[R1, _], [R1, _], [R2, _], [R2, _], [R1, _]]).
-is_full_house([[R1, _], [R2, _], [R1, _], [R2, _], [R1, _]]).
-is_full_house([[R1, _], [R2, _], [R2, _], [R1, _], [R1, _]]).
-is_full_house([[R2, _], [R1, _], [R2, _], [R1, _], [R1, _]]).
-is_full_house([[R2, _], [R2, _], [R1, _], [R1, _], [R1, _]]).
+is_full_house([[R1, S1], [R1, S2], [R1, S3], [R2, S4], [R2, S5]]) :-
+    is_valid_hand([[R1, S1], [R1, S2], [R1, S3], [R2, S4], [R2, S5]]),
+    !.
+is_full_house([[R1, S1], [R1, S2], [R2, S3], [R2, S4], [R1, S5]]) :-
+    is_valid_hand([[R1, S1], [R1, S2], [R2, S3], [R2, S4], [R1, S5]]),
+    !.
+is_full_house([[R1, S1], [R2, S2], [R1, S3], [R2, S4], [R1, S5]]) :-
+    is_valid_hand([[R1, S1], [R2, S2], [R1, S3], [R2, S4], [R1, S5]]),
+    !.
+is_full_house([[R1, S1], [R2, S2], [R2, S3], [R1, S4], [R1, S5]]) :-
+    is_valid_hand([[R1, S1], [R2, S2], [R2, S3], [R1, S4], [R1, S5]]),
+    !.
+is_full_house([[R2, S1], [R1, S2], [R2, S3], [R1, S4], [R1, S5]]) :-
+    is_valid_hand([[R2, S1], [R1, S2], [R2, S3], [R1, S4], [R1, S5]]),
+    !.
+is_full_house([[R2, S1], [R2, S2], [R1, S3], [R1, S4], [R1, S5]]) :-
+    is_valid_hand([[R2, S1], [R2, S2], [R1, S3], [R1, S4], [R1, S5]]),
+    !.
 is_full_house(X) :-
     with_two(is_full_house, X).
 
