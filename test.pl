@@ -60,11 +60,23 @@ test(is_royal_flush_simple_not_rank) :-
 test(is_royal_flush_simple_not_suit) :-
     not(is_royal_flush([[a, c], [k, h], [q, h], [j, h], [10, h]])).
 
-test(is_royal_flush_one_2) :-
-    is_royal_flush([[a, h], [2, c], [q, h], [j, h], [10, h]]).
+%%%%
 
-test(is_royal_flush_one_2) :-
-    is_royal_flush([[a, h], [2, c], [q, h], [j, h], [2, s]]).
+test(is_four_deuces) :-
+    is_four_deuces([[a, h], [2, c], [2, h], [2, d], [2, s]]).
+
+%%%%
+
+test(is_5_of_kind) :-
+    is_5_of_kind([[a, h], [a, c], [a, s], [a, d], [2, s]]).
+
+%%%%
+
+test(is_wild_royal_flush_one_2) :-
+    is_wild_royal_flush([[a, h], [2, c], [q, h], [j, h], [10, h]]).
+
+test(is_wild_royal_flush_two_2) :-
+    is_wild_royal_flush([[a, h], [2, c], [2, s], [j, h], [10, h]]).
 
 %%% is_4_of_kind
 
@@ -152,20 +164,6 @@ test(is_straight_flush_simple) :-
 
 test(is_straight_one_2) :-
     is_straight_flush([[7, h], [5, h], [4, h], [2, c], [6, h]]).
-
-%%% is_two_pair
-
-test(is_two_pair) :-
-    is_two_pair([[3, h], [5, c], [3, d], [7, s], [7, h]]).
-
-test(is_two_pair_not_first) :-
-    is_two_pair([[5, c], [3, h], [3, d], [7, s], [7, h]]).
-
-test(is_two_pair_not) :-
-    not(is_two_pair([[5, c], [6, h], [3, d], [7, s], [7, h]])).
-
-test(is_two_pair_one_two) :-
-    is_two_pair([[5, c], [2, h], [3, d], [7, s], [7, h]]).
 
 :- end_tests(deuceswild).
 

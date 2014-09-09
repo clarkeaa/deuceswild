@@ -5,21 +5,25 @@
 print_name(1) :-
     write("royal flush").
 print_name(2) :-
-    write("straight flush").
+    write("4 deuces").
 print_name(3) :-
-    write("4 of kind").
+    write("wild royal flush").
 print_name(4) :-
-    write("full house").
+    write("5 of a kind").
 print_name(5) :-
-    write("flush").
+    write("straight flush").
 print_name(6) :-
-    write("straight").
+    write("4 of a kind").
 print_name(7) :-
-    write("3 of kind").
+    write("full house").
 print_name(8) :-
-    write("two pair").
+    write("flush").
 print_name(9) :-
-    write("nothing").
+    write("straight").
+print_name(10) :-
+    write("3 of a kind").
+print_name(11) :-
+    write("none").
 
 print_example(X) :-
     writef("%p = ", [X]),

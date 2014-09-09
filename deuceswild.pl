@@ -105,8 +105,21 @@ is_royal_flush([[R1, S], [R2, S], [R3, S], [R4, S], [R5, S]]) :-
     permutation([R1, R2, R3, R4, R5], [a, k, q, j, 10]),
     is_valid_hand([[R1, S], [R2, S], [R3, S], [R4, S], [R5, S]]),
     !.
-is_royal_flush(X) :-
-    with_two(is_royal_flush, X).
+
+%%%
+
+is_wild_royal_flush([[R1, S1], [R2, S2], [R3, S3], [R4, S4], [R5, S5]]) :-
+    is_royal_flush([[R1, S1], [R2, S2], [R3, S3], [R4, S4], [R5, S5]]),
+    !.
+is_wild_royal_flush(X) :-
+    with_two(is_wild_royal_flush, X).
+
+%%%%%
+
+is_four_deuces([[R1, S1], [R2, S2], [R3, S3], [R4, S4], [R5, S5]]) :-
+    has_4(2, [R1, R2, R3, R4, R5]),
+    is_valid_hand([[R1, S1],[R2, S2],[R3, S3],[R4, S4],[R5, S5]]),
+    !.
     
 %%%%%
 is_4_of_kind([[R1, S1], [R2, S2], [R3, S3], [R4, S4], [R5, S5]]) :-
@@ -115,6 +128,11 @@ is_4_of_kind([[R1, S1], [R2, S2], [R3, S3], [R4, S4], [R5, S5]]) :-
     !.
 is_4_of_kind(X) :-
     with_two(is_4_of_kind, X).
+
+%%%%%
+is_5_of_kind([[R, _], [R, _], [R, _], [R, _], [R, _]]).
+is_5_of_kind(X) :-
+    with_two(is_5_of_kind, X).
 
 %%%%%
 is_flush([[R1, S], [R2, S], [R3, S], [R4, S], [R5, S]]) :-
@@ -204,20 +222,6 @@ is_straight_flush(X) :-
     is_straight(X),
     is_flush(X).
 
-%%%%%%%
-is_two_pair([[R1, S1], [R2, S2], [R3, S3], [R4, S4], [R5, S5]]) :-
-    has_2(R1, [R1, R2, R3, R4, R5]),
-    has_2s([R2, R3, R4, R5], [R1, R2, R3, R4, R5]),
-    is_valid_hand([[R1, S1],[R2, S2],[R3, S3],[R4, S4],[R5, S5]]),
-    !.
-is_two_pair([[R1, S1], [R2, S2], [R3, S3], [R4, S4], [R5, S5]]) :-
-    has_2(R2, [R1, R2, R3, R4, R5]),
-    has_2s([R1, R3, R4, R5], [R1, R2, R3, R4, R5]),
-    is_valid_hand([[R1, S1],[R2, S2],[R3, S3],[R4, S4],[R5, S5]]),
-    !.
-is_two_pair(X) :-
-    with_two(is_two_pair, X).
-
 %%%%%%%%%%%%%%%
 
 which_hand(X, Name) :-
@@ -225,35 +229,43 @@ which_hand(X, Name) :-
     Name is 1,
     !.
 which_hand(X, Name) :-
-    is_straight_flush(X),
+    is_four_deuces(X),
     Name is 2,
     !.
 which_hand(X, Name) :-
-    is_4_of_kind(X),
+    is_wild_royal_flush(X),
     Name is 3,
     !.
 which_hand(X, Name) :-
-    is_full_house(X),
+    is_5_of_kind(X),
     Name is 4,
     !.
 which_hand(X, Name) :-
-    is_flush(X),
+    is_straight_flush(X),
     Name is 5,
     !.
 which_hand(X, Name) :-
-    is_straight(X),
+    is_4_of_kind(X),
     Name is 6,
     !.
 which_hand(X, Name) :-
-    is_3_of_kind(X),
+    is_full_house(X),
     Name is 7,
     !.
 which_hand(X, Name) :-
-    is_two_pair(X),
+    is_flush(X),
     Name is 8,
     !.
-which_hand(_, Name) :-
+which_hand(X, Name) :-
+    is_straight(X),
     Name is 9,
+    !.
+which_hand(X, Name) :-
+    is_3_of_kind(X),
+    Name is 10,
+    !.
+which_hand(_, Name) :-
+    Name is 11,
     !.
 
 
