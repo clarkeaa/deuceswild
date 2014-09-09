@@ -130,7 +130,9 @@ is_4_of_kind(X) :-
     with_two(is_4_of_kind, X).
 
 %%%%%
-is_5_of_kind([[R, _], [R, _], [R, _], [R, _], [R, _]]).
+is_5_of_kind([[R1, S1], [R2, S2], [R3, S3], [R4, S4], [R5, S5]]) :-
+    cards([[R1, S1], [R2, S2], [R3, S3], [R4, S4], [R5, S5]]),
+    !.
 is_5_of_kind(X) :-
     with_two(is_5_of_kind, X).
 
